@@ -21,22 +21,18 @@ new class extends Component
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Inicio') }}
-                    </x-nav-link>
                     
-                    <x-nav-link href="#" style="color: #1e40af;">
-                        {{ __('Catálogo (Estudiante)') }}
+                    <x-nav-link :href="route('catalogo')" :active="request()->routeIs('catalogo')" wire:navigate>
+                         {{ __('Inicio') }}
                     </x-nav-link>
 
-                    <x-nav-link href="#" style="color: #047857;">
-                        {{ __('Gestión de Cursos (Instructor)') }}
+                    <x-nav-link :href="route('gestion')" :active="request()->routeIs('gestion')" style="color: #047857;" wire:navigate>
+                            {{ __('Gestión de Cursos (Instructor)') }}
                     </x-nav-link>
                 </div>
             </div>
