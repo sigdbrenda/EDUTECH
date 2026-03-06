@@ -31,9 +31,14 @@ new class extends Component
                          {{ __('Inicio') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('gestion')" :active="request()->routeIs('gestion')" style="color: #047857;" wire:navigate>
-                            {{ __('Gestión de Cursos (Instructor)') }}
+                    @if(auth()->user()->role === 'instructor')
+
+                    <x-nav-link :href="route('instructor.admin')" :active="request()->routeIs('instructor.admin')" style="color: #047857;" wire:navigate>
+                        {{ __('Gestión de Cursos') }}
                     </x-nav-link>
+
+                    @endif
+                    
                 </div>
             </div>
 

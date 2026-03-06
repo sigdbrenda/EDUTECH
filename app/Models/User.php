@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Course; // Importamos el modelo Course
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +46,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function courses_enrolled()
+    {
+        return $this->belongsToMany(Course::class, 'course_user')
+                    ->withTimestamps();
+    }
+
+    public function isEnrolledIn(Course $course)
+    {
+        return $this->courses_enrolled->contains($course->id);
     }
 }
