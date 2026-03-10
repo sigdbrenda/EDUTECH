@@ -33,26 +33,35 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
-    
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'summary' => 'nullable|string',
-        'level' => 'nullable|string',
-        'learning_outcomes' => 'nullable|array',
-        'requirements' => 'nullable|array',
-    ]);
+        $data = $request->only([
+            'title',
+            'price',
+            'summary',
+            'level',
+            'description',
+            'learning_goals',
+            'learning_outcomes'
+        ]);
 
-    
-    $course->update([
-        'title' => $request->title,
-        'summary' => $request->summary,
-        'level' => $request->level,
-        'learning_outcomes' => $request->learning_outcomes,
-        'requirements' => $request->requirements,
-    ]);
+        if ($request->hasFile('image')) {
 
-    
-    return redirect()->route('instructor.admin')->with('success', 'Curso actualizado correctamente');
+            $path = $request->file('image')->store('courses', 'public');
+
+            $data['image_path'] = $path;
+        }
+
+        if ($request->has('categories')) {
+        
+        $course->categories()->sync($request->categories);
+        }    else {
+        
+        $course->categories()->detach();
+        }
+
+        $course->fill($data);
+        $course->save();
+
+        return back()->with('success', 'Curso actualizado correctamente');
     }
 
     public function destroy(Course $course)
@@ -136,10 +145,8 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         
-        $course->load(['teacher', 'sections.lessons', 'category']);
+        $course->load(['teacher', 'sections.lessons', 'categories']);
         
-        $course->students_count = $course->students()->count();
-
         return view('courses.show', compact('course'));
     }
 

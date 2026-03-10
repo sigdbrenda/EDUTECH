@@ -31,8 +31,8 @@
                             {{-- Imagen con efecto de zoom --}}
                             <div class="relative overflow-hidden rounded-t-2xl">
                                 <img src="{{ $course->image_path ? asset('storage/'.$course->image_path) : asset('img/php.jpg') }}" 
-                                     alt="{{ $course->title }}"
-                                     class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                                    alt="{{ $course->title }}"
+                                    class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
                             </div>
 
                             {{-- Cuerpo de la tarjeta --}}

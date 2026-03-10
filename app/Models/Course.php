@@ -14,9 +14,12 @@ class Course extends Model
         'language', 
         'user_id', 
         'status', 
-        'price', 
+        'description',
+        'learning_goals',
+        'price',
         'summary', 
         'level', 
+        'image_path',
         'learning_outcomes', 
         'requirements'
     ];
@@ -29,12 +32,6 @@ class Course extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
     }
 
     public function teacher()
@@ -51,5 +48,10 @@ class Course extends Model
     public function students()
     {
         return $this->belongsToMany(User::class, 'course_user');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }
